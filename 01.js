@@ -1,64 +1,184 @@
-const userName = prompt("Bienvenido a tu agenda de Gasto Personal 💰 \n Como es tu nombre?");
-//declaramos las variables totales
-let totalBudget = 0;
-let totalExpenses = 0;
-let wallet;
-let porcentualWallet;
-let lvlMonth;
-//Valida la entrada del nombre
-while ((userName == "") || (userName == " ")) {
-    alert("Nombre de usuario Invalido, Por favor ingrese nuevamente");
-    userName = prompt("Ingresa nuevamente");
+// Preentrega 2 = persona es un objeto que contiene 2 arrays de objetos (gastos e ingresos)
+const persona =
+{
+    nombre: "Benjamin",
+    balanceTotal: 0,
+    porcentualBilletera: 0,
+    moneda: "Arg",
+    ingresos: {
+        movimientos: [
+            {
+                motivo: 'Sueldo',
+                monto: 250000,
+                fecha: new Date('06/01/23').toLocaleDateString()
+            },
+            {
+                motivo: 'Aguinaldo',
+                monto: 125000,
+                fecha: new Date('07/01/23').toLocaleDateString()
+            }
+        ]
+
+    },
+    gastos: {
+        movimientos: [
+            {
+                motivo: 'Supermercado',
+                monto: 18450,
+                fecha: new Date('06/02/23').toLocaleDateString()
+            },
+            {
+                motivo: 'Tarjeta de credito',
+                monto: 32333,
+                fecha: new Date('06/05/23').toLocaleDateString()
+            },
+            {
+                motivo: 'Tarjeta de credito',
+                monto: 18234,
+                fecha: new Date('06/07/23').toLocaleDateString()
+            },
+            {
+                motivo: 'Impuestos',
+                monto: 4300,
+                fecha: new Date('01/06/23').toLocaleDateString()
+            },
+            {
+                motivo: 'Vehiculos',
+                monto: 15300,
+                fecha: new Date('06/04/23').toLocaleDateString()
+            },
+            {
+                motivo: 'Extra',
+                monto: 1200,
+                fecha: new Date('06/04/23').toLocaleDateString()
+            },
+            {
+                motivo: 'Extra',
+                monto: 3500,
+                fecha: new Date('06/06/23').toLocaleDateString()
+            }
+        ],
+    },
+    // Preentrega 2: metodos para agregar al gastos/ingresoss
+    agregarIngreso(ingreso) {
+        this.ingresos.movimientos.push(ingreso);
+    },
+    agregarGasto(gasto) {
+        this.gastos.movimientos.push(gasto);
+    },
+    // Preentrega 2: metodos para mostrar el total de gastos/ingresos
+    sumaIngreso() {
+        const totalIngresos = this.ingresos.movimientos.reduce((acumulador, ingreso) => acumulador + ingreso.monto, 0)
+        console.log(totalIngresos);
+        return totalIngresos;
+    },
+    sumaGasto() {
+        const totalGastos = this.gastos.movimientos.reduce((acumulador, gasto) => acumulador + gasto.monto, 0)
+        console.log(totalGastos);
+        return totalGastos;
+    },
+    //metodo para agrupar gastos por motivo (en construccion)
+    agruparmotivos() {
+        const tarjetaCred = persona.gastos.movimientos.filter((gasto) => gasto.motivo == 'Tarjeta de credito');
+        const imp = persona.gastos.movimientos.filter((gasto) => gasto.motivo == "Impuestos");
+        const vehiculo = persona.gastos.movimientos.filter((gasto) => gasto.motivo == "Vehiculo");
+        const supermercado = persona.gastos.movimientos.filter((gasto) => gasto.motivo == "Supermercado");
+        const extra = persona.gastos.movimientos.filter((gasto) => gasto.motivo == "Extra")
+
+
+    }
+
 }
 
+let nivelMes;
 // las 3 principales opciones del usuario
-let chooseOption = parseInt(prompt("Bienvenido " + userName + " a tu calculadora de gastos. Que necesitas hacer: \n1-Ingresos ⬆️\n2-Gastos ⬇️"));
+let elegirOpcion = parseInt(prompt("Bienvenido " + persona.nombre + " a tu calculadora de gastos. Que necesitas hacer: \n1-Ingresos ⬆️\n2-Gastos ⬇️ \n3-Mostrar Status(salir) 📉"));
 
 
-while (chooseOption != 3) {
-
-    switch (chooseOption) {
+while (elegirOpcion != 3) {
+    //Preentrega 2: captura la fecha del dia para guardar en el array
+    let fecha = new Date().toLocaleDateString();
+    // Con esto elegiremos el ingreso/Gasto sectorizado
+    switch (elegirOpcion) {
         case 1:
-            let tipeOfBudget = parseInt(prompt("tipo de ingreso: \n1-Sueldo 💵 \n2-Aguinaldo💰")); //proxima version incorporara esto
-            let budget = parseInt(prompt("Monto del ingreso:"));
-            increaseBugdet(budget);
+            let tipoDeIngreso = parseInt(prompt("tipo de ingreso: \n1-Sueldo 💵 \n2-Aguinaldo💰  \n3-Extra 💵"));
+            if (tipoDeIngreso === 1) {
+                tipoDeIngreso = "Sueldo";
+            }
+            else if (tipoDeIngreso === 2) {
+                tipoDeIngreso = "Aguinaldo";
+            }
+            else {
+                tipoDeIngreso = "Extra";
+            }
+
+            let ingreso = parseInt(prompt("Monto del ingreso:"));
+            //Preentrega 2: formara el array para push
+            let nuevoIngreso = {
+                motivo: tipoDeIngreso,
+                monto: ingreso,
+                fecha: fecha
+            }
+            persona.agregarIngreso(nuevoIngreso);
+            persona.sumaIngreso();
             break;
         case 2:
-            let tipeOfExpense = parseInt(prompt("tipo de Gasto: \n1-Tarjetas de credito💳 \n2-Impuestos 📝\n3-Vehiculos 🚘\n4-Supermercado/Kiosco 🛒")); //proxima version incorporara esto
-            let expense = parseInt(prompt("Monto del Gasto:"));
-            increaseExpense(expense);
+            let tipoDeGasto = parseInt(prompt("tipo de Gasto: \n1-Tarjeta de credito💳 \n2-Impuestos 📝\n3-Vehiculos 🚘\n4-Supermercado🛒 \n5-Extra 🛒"));
+            if (tipoDeGasto === 1) {
+                tipoDeGasto = "Tajeta de Credito";
+            }
+            else if (tipoDeGasto === 2) {
+                tipoDeGasto = "Impuestos";
+            }
+            else if (tipoDeGasto === 3) {
+                tipoDeGasto = "Vehiculos";
+            }
+            else if (tipoDeGasto === 4) {
+                tipoDeGasto = "Supermercado";
+            }
+            else {
+                tipoDeGasto = "Extra";
+            }
+            let gasto = parseInt(prompt("Monto del Gasto:"));
+
+            //Preentrega 2: formara el array para push
+            let nuevoGasto = {
+                motivo: tipoDeGasto,
+                monto: gasto,
+                fecha: fecha
+            }
+            persona.agregarGasto(nuevoGasto);
+            persona.sumaGasto();
+            break;
 
     }
 
-    chooseOption = parseInt(prompt("Gracias " + userName + " el valor fue agregado correctamente, te gustaria seguir agregando? \n1-Ingresos ⬆️\n2-Gastos ⬇️\n3-Mostrar Status 📉"));
+    elegirOpcion = parseInt(prompt("Gracias " + persona.nombre + " el valor fue agregado correctamente, te gustaria seguir agregando? \n1-Ingresos ⬆️\n2-Gastos ⬇️\n3-Mostrar Status 📉"));
 }
-CalculateWallet(totalBudget,totalExpenses)
-chooseOption = parseInt(prompt(`Hola ${userName}\nTus ingresos este mes fueron: \$${totalBudget}\nTus Gastos este mes fueron: \$${totalExpenses}.\nAun tienes disponible: \$${wallet}.\nQuedan en tu billetera un el ${porcentualWallet}% de tus ingresos. \nConsejo: ${lvlMonth}\n-----------Programa finalizado----------\n01-Salir`));
+CalculateWallet(persona.sumaIngreso(), persona.sumaGasto());
+persona.agruparmotivos();
+elegirOpcion = parseInt(prompt(`Hola ${persona.nombre}\nTus ingresos este mes fueron: \$${persona.sumaIngreso()}\nTus Gastos este mes fueron: \$${persona.sumaGasto()}.\nAun tienes disponible: \$${persona.balanceTotal}.\nQuedan en tu billetera un el ${persona.porcentualBilletera}% de tus ingresos. \nConsejo: ${nivelMes}
+\n-----------Programa finalizado----------\n01-Salir`));
 
 
-//Funcion para Sumar Ingreso
-function increaseBugdet(budget) {
-    totalBudget = totalBudget + budget;
-    console.log("Billetera de " + userName + "\nEl total de ingresos es: " + totalBudget+ "\nEl total de Gastos es: " + totalExpenses)
-}
-//Funcion para Sumar egreso
-function increaseExpense(expense) {
-    totalExpenses = totalExpenses + expense;
-    console.log("Billetera de " + userName + "\nEl total de ingresos es: " + totalBudget + "\nEl total de Gastos es: " + totalExpenses )
-}
+
 //Funcion para calcular restante que queda en la billetera
-function CalculateWallet (incr, decr){
-    wallet = incr- decr;
-  
-    porcentualWallet = (decr/incr)*100;
-    if((porcentualWallet >=1) && (porcentualWallet<=10)){
-        lvlMonth = "Verifica tus margenes, estas cerca que quedarte sin dinero";
-    }else if ((porcentualWallet >=11) && (porcentualWallet<=30)){
-        lvlMonth = "Bien, buena administracion";
-    }else if ((porcentualWallet >=31) && (porcentualWallet<=50)){
-        lvlMonth = "Es un gran Mes! sigue asi!";
-    }else{
-        lvlMonth = "Es un excelente mes para Ahorrar capital";
+function CalculateWallet(incr, decr) {
+    persona.balanceTotal = incr - decr;
+    console.log(persona.balanceTotal);
+    //Preentrega 2: Round para redondeo
+    persona.porcentualBilletera = Math.round(((incr - decr) / incr) * 100);
+    if ((persona.porcentualBilletera >= 1) && (persona.porcentualBilletera <= 10)) {
+        nivelMes = "Verifica tus margenes, estas cerca que quedarte sin dinero";
+    } else if ((persona.porcentualBilletera >= 11) && (persona.porcentualBilletera <= 30)) {
+        nivelMes = "Bien, buena administracion";
+    } else if ((persona.porcentualBilletera >= 31) && (persona.porcentualBilletera <= 50)) {
+        nivelMes = "Es un gran Mes! sigue asi!";
+    } else {
+        nivelMes = "Es un excelente mes para Ahorrar capital";
+
     }
-    console.log("Quedan en tu billetera un total de: $" + wallet+ "quedan en tu billetera un el "+porcentualWallet +"% de tus ingresos");
+    console.log("Quedan en tu billetera un total de: $" + persona.balanceTotal + "quedan en tu billetera un el " + persona.porcentualBilletera + "% de tus ingresos");
 }
+
+

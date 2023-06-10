@@ -156,6 +156,7 @@ while (elegirOpcion != 3) {
     elegirOpcion = parseInt(prompt("Gracias " + persona.nombre + " el valor fue agregado correctamente, te gustaria seguir agregando? \n1-Ingresos ⬆️\n2-Gastos ⬇️\n3-Mostrar Status 📉"));
 }
 CalculateWallet(persona.sumaIngreso(), persona.sumaGasto());
+console.table(persona.gastos.movimientos);
 persona.agruparmotivos();
 elegirOpcion = parseInt(prompt(`Hola ${persona.nombre}\nTus ingresos este mes fueron: \$${persona.sumaIngreso()}\nTus Gastos este mes fueron: \$${persona.sumaGasto()}.\nAun tienes disponible: \$${persona.balanceTotal}.\nQuedan en tu billetera un el ${persona.porcentualBilletera}% de tus ingresos. \nConsejo: ${nivelMes}
 \n-----------Programa finalizado----------\n01-Salir`));

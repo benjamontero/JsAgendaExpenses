@@ -40,10 +40,10 @@ const persona =
             {
                 motivo: 'Impuestos',
                 monto: 4300,
-                fecha: new Date('01/06/23').toLocaleDateString()
+                fecha: new Date('06/01/23').toLocaleDateString()
             },
             {
-                motivo: 'Vehiculos',
+                motivo: 'Vehiculo',
                 monto: 15300,
                 fecha: new Date('06/04/23').toLocaleDateString()
             },
@@ -69,27 +69,20 @@ const persona =
     // Preentrega 2: metodos para mostrar el total de gastos/ingresos
     sumaIngreso() {
         const totalIngresos = this.ingresos.movimientos.reduce((acumulador, ingreso) => acumulador + ingreso.monto, 0)
-        console.log(totalIngresos);
         return totalIngresos;
     },
     sumaGasto() {
         const totalGastos = this.gastos.movimientos.reduce((acumulador, gasto) => acumulador + gasto.monto, 0)
         console.log(totalGastos);
         return totalGastos;
+
     },
-    //metodo para agrupar gastos por motivo (en construccion)
-    agruparmotivos() {
-        const tarjetaCred = persona.gastos.movimientos.filter((gasto) => gasto.motivo == 'Tarjeta de credito');
-        const imp = persona.gastos.movimientos.filter((gasto) => gasto.motivo == "Impuestos");
-        const vehiculo = persona.gastos.movimientos.filter((gasto) => gasto.motivo == "Vehiculo");
-        const supermercado = persona.gastos.movimientos.filter((gasto) => gasto.motivo == "Supermercado");
-        const extra = persona.gastos.movimientos.filter((gasto) => gasto.motivo == "Extra")
-
-
-    }
 
 }
+// Variables globales
 
+let mayorConsumo = 0;
+let nombreMayorMotivo = '';
 let nivelMes;
 // las 3 principales opciones del usuario
 let elegirOpcion = parseInt(prompt("Bienvenido " + persona.nombre + " a tu calculadora de gastos. Que necesitas hacer: \n1-Ingresos ⬆️\n2-Gastos ⬇️ \n3-Mostrar Status(salir) 📉"));
@@ -156,12 +149,32 @@ while (elegirOpcion != 3) {
     elegirOpcion = parseInt(prompt("Gracias " + persona.nombre + " el valor fue agregado correctamente, te gustaria seguir agregando? \n1-Ingresos ⬆️\n2-Gastos ⬇️\n3-Mostrar Status 📉"));
 }
 CalculateWallet(persona.sumaIngreso(), persona.sumaGasto());
-console.table(persona.gastos.movimientos);
-persona.agruparmotivos();
-elegirOpcion = parseInt(prompt(`Hola ${persona.nombre}\nTus ingresos este mes fueron: \$${persona.sumaIngreso()}\nTus Gastos este mes fueron: \$${persona.sumaGasto()}.\nAun tienes disponible: \$${persona.balanceTotal}.\nQuedan en tu billetera un el ${persona.porcentualBilletera}% de tus ingresos. \nConsejo: ${nivelMes}
+//metodo para agrupar gastos por motivo 
+obtenerMayorConsumo();
+
+function obtenerMayorConsumo() {
+    const motivos = ["Tarjeta de credito", "Impuestos", "Vehiculo", "Supermercado", "Extra"];
+
+    motivos.forEach((motivo => {
+        //Preentrega 2: filtra en el array principal y genera otro array si cumple con la cond
+        const gastosFiltrados = persona.gastos.movimientos.filter((gasto) => gasto.motivo === motivo);
+        //Preentrega 2: calcula cuando total de montos en los array de gastos filtrados
+        const gastosTotalFiltrado = gastosFiltrados.reduce((acumulador, gasto) => acumulador + gasto.monto, 0);
+        //Preentrega 2: calculara entre todos los valores que vaya teniendo gastostotalfiltrado para poder comparar
+        console.log(gastosTotalFiltrado);
+        if (mayorConsumo < gastosTotalFiltrado) {
+            mayorConsumo = gastosTotalFiltrado;
+            nombreMayorMotivo = motivo;
+        }
+    }
+    ))
+
+}
+
+
+elegirOpcion = parseInt(prompt(`Hola ${persona.nombre}\nTus ingresos este mes fueron: \$${persona.sumaIngreso()}\nTus Gastos este mes fueron: \$${persona.sumaGasto()}.\nAun tienes disponible: \$${persona.balanceTotal}.\nQuedan en tu billetera un el ${persona.porcentualBilletera}% de tus ingresos.\n Este mes tu mayor consumo fue: $${mayorConsumo} en ${nombreMayorMotivo}
+\nConsejo: ${nivelMes}
 \n-----------Programa finalizado----------\n01-Salir`));
-
-
 
 //Funcion para calcular restante que queda en la billetera
 function CalculateWallet(incr, decr) {
@@ -180,6 +193,7 @@ function CalculateWallet(incr, decr) {
 
     }
     console.log("Quedan en tu billetera un total de: $" + persona.balanceTotal + "quedan en tu billetera un el " + persona.porcentualBilletera + "% de tus ingresos");
-}
+};
+
 
 

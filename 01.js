@@ -73,7 +73,6 @@ const persona =
     },
     sumaGasto() {
         const totalGastos = this.gastos.movimientos.reduce((acumulador, gasto) => acumulador + gasto.monto, 0)
-        console.log(totalGastos);
         return totalGastos;
 
     },
@@ -85,7 +84,7 @@ let mayorConsumo = 0;
 let nombreMayorMotivo = '';
 let nivelMes;
 // las 3 principales opciones del usuario
-let elegirOpcion = parseInt(prompt("Bienvenido " + persona.nombre + " a tu calculadora de gastos. Que necesitas hacer: \n1-Ingresos ⬆️\n2-Gastos ⬇️ \n3-Mostrar Status(salir) 📉"));
+//let elegirOpcion = parseInt(prompt("Bienvenido " + persona.nombre + " a tu calculadora de gastos. Que necesitas hacer: \n1-Ingresos ⬆️\n2-Gastos ⬇️ \n3-Mostrar Status(salir) 📉"));
 
 
 while (elegirOpcion != 3) {
@@ -161,7 +160,7 @@ function obtenerMayorConsumo() {
         //Preentrega 2: calcula cuando total de montos en los array de gastos filtrados
         const gastosTotalFiltrado = gastosFiltrados.reduce((acumulador, gasto) => acumulador + gasto.monto, 0);
         //Preentrega 2: calculara entre todos los valores que vaya teniendo gastostotalfiltrado para poder comparar
-        console.log(gastosTotalFiltrado);
+        // console.log(gastosTotalFiltrado);
         if (mayorConsumo < gastosTotalFiltrado) {
             mayorConsumo = gastosTotalFiltrado;
             nombreMayorMotivo = motivo;
@@ -179,7 +178,7 @@ elegirOpcion = parseInt(prompt(`Hola ${persona.nombre}\nTus ingresos este mes fu
 //Funcion para calcular restante que queda en la billetera
 function CalculateWallet(incr, decr) {
     persona.balanceTotal = incr - decr;
-    console.log(persona.balanceTotal);
+    //console.log(persona.balanceTotal);
     //Preentrega 2: Round para redondeo
     persona.porcentualBilletera = Math.round(((incr - decr) / incr) * 100);
     if ((persona.porcentualBilletera >= 1) && (persona.porcentualBilletera <= 10)) {
@@ -192,7 +191,7 @@ function CalculateWallet(incr, decr) {
         nivelMes = "Es un excelente mes para Ahorrar capital";
 
     }
-    console.log("Quedan en tu billetera un total de: $" + persona.balanceTotal + "quedan en tu billetera un el " + persona.porcentualBilletera + "% de tus ingresos");
+   // console.log("Quedan en tu billetera un total de: $" + persona.balanceTotal + "quedan en tu billetera un el " + persona.porcentualBilletera + "% de tus ingresos");
 };
 
 

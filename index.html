@@ -5,73 +5,129 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Billetera de Gastos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet">
+
+    <!-- Iconos y fuentes -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+
 </head>
 
 <body>
-    <h1>Agenda Personal</h1>
-    <div>
-        <h2> Version 2: Pre Entrega</h2>
+    <div class="container-fluid px-4 p-4 border border-primary ">
+        <nav class="p-2 navbar navbar-expand-lg navbar-light border border-primary ">
+            <a class="navbar-brand" href="#">Billetera de Gastos </a>
+            <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Ingresos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Gastos</a>
+                    </li>
 
-        <p><strong>En esta segunda version se implementa:</strong></p>
-        <ul>
-            <li>Objetos (Persona) que contiene array internos</li>
-            <li>Ingresos (Array) - Permitira sectorizar los Ingresos (proxima Version)
-                <ul>
-                    <li>Sueldo, Aguinaldo, Extra</li>
                 </ul>
-            </li>            
-            <li>Gastos (Array) - Permitira sectorizar los gastos (proxima Version)
-                <ul>
-                    <li>Tarjetas de Credito ,Impuestos ,Vehiculos, Supermercado, Kiosco, Extra</li>
-                </ul>
-            <li>Fecha de consumo de gasto/ingreso (date method) - Organizara los consumos por mes (proxima Version)</li>
-            <li>Balance total: Calcula el resto de dinero que queda disponible</li>
-            <li>porcentualBilletera: Calcula porcentaje para mensaje de consejo (CalculateWallet()) </li>
+            </div>
+        </nav>
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4">
+                <div class="col-sm-6 col-xl-3">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <i class="fa fa-university  fa-3x text-primary"></i>
+                        <div class="ms-3">
+                            <p class="mb-2 fs-4">Ingresos</p>
+                            <h5 class="mb-0">$350344</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <i class="fa fa-chart-pie fa-3x text-primary"></i>
+                        <div class="ms-3">
+                            <p class="mb-2 fs-4">% Wallet</p>
+                            <h5 class="mb-0">80%</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="bg-success rounded d-flex align-items-center justify-content-between p-4">
+                        <i class="fa fa-chart-line fa-3x text-light"></i>
+                        <div></div>
+                        <div class="ms-3">
+                            <p class="mb-2 text-light fs-4">Ingresos Mes</p>
+                            <h5 class="mb-0 text-light">$450000</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="bg-danger rounded d-flex align-items-center justify-content-between p-4">
+                        <i class="fa fa-exclamation-triangle fa-3x text-light"></i>
+                        <div class="ms-3">
+                            <p class="mb-2 text-light fs-4">Egresos Mes</p>
+                            <h5 class="mb-0 text-light">$167043</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            </li>
-        </ul>
-        <p><strong>Funciones y metodos en preentrega2</strong></p>
-        <ul>
-            <li>agregarIngreso() - Metodo de objeto - push</li>
-            <li>agregarGasto() - Metodo de objeto - push</li>
-            <li>sumaIngreso() - Metodo de objeto - reduce</li>
-            <li>sumaGasto() - Metodo de objeto - reduce</li>
-            <li>obtenerMayorConsumo() - Function - Foreach, filter, reduce</li>
-            <li>CalculateWallet() -Function - math.round - indica segun el % de liquidez que queda en la cuenta, consejos</li>
-        </ul>
+    
+
     </div>
-    <div>
-        <h2>Version 1: Pre Entrega</h2>
+    
+    <div class="">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Monto</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Accion</th>
 
-        <p><strong>Tomaremos del usuario los siguientes datos:</strong></p>
-        <ul>
-            <li>Nombre</li>
-            <li>Mes (Proxima Version)</li>
-            <li>Ingresos (Proxima Version con separacion por motivo)
-                <ul>
-                    <li>Sueldo &check</li>
-                    <li>Aguinaldo</li>
-                    <li>Extra (Proxima Version)</li>
-                </ul>
-            </li>
-            <li>Gastos (Proxima Version con separacion por motivo)
-                <ul>
-                    <li>Tarjetas de Credito</li>
-                    <li>Impuestos</li>
-                    <li>Vehiculos</li>
-                    <li>Supermercado, Kiosco, Extra</li>
-                </ul>
-            </li>
-        </ul>
-        <p><strong>Operaciones de las Version 1.0</strong></p>
-        <ul>
-            <li>increaseBugdet() - realizara las sumas de los ingresos</li>
-            <li>increaseExpense() realizara las sumas de los Egresos</li>
-            <li>CalculateWallet () - operacopmes matematicas para estadisticas</li>
-        </ul>
-
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Tarjeta de credito</td>
+                <td>$11111</td>
+                <td>03/06/2023</td>
+                <td>
+                    <button type="button" class="btn btn-outline-primary">Modificar</button>
+                    <button type="button" class="btn btn-outline-primary">Eliminar</button>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Impuestos</td>
+                <td>$22222</td>
+                <td>04/04/2023</td>
+                <td>
+                    <button type="button" class="btn btn-outline-primary">Modificar</button>
+                    <button type="button" class="btn btn-outline-primary">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
     </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
     <script src="01.js"></script>
 </body>
 

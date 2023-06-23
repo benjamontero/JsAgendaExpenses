@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <div class="container-fluid px-4 p-4 border border-primary ">
+    <div class="container-fluid px-4 p-4 border border-primary  ">
         <nav class="p-2 navbar navbar-expand-lg navbar-light border border-primary ">
             <a class="navbar-brand" href="#">Billetera de Gastos </a>
             <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -41,19 +41,19 @@
             </div>
         </nav>
         <div class="container-fluid pt-4 px-4">
-            <div class="row g-4">
+            <div class="row g-3">
                 <div class="col-sm-6 col-xl-3">
-                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                        <i class="fa fa-university  fa-3x text-primary"></i>
+                    <div class="bg-light rounded  shadow-sm d-flex align-items-center justify-content-between p-4">
+                        <i class="fa fa-university fa-3x text-primary opacity-75"></i>
                         <div class="ms-3">
-                            <p class="mb-2 fs-4">Ingresos</p>
-                            <h5 class="mb-0">$350344</h5>
+                            <p class="mb-2 fs-4">Disponible</p>
+                            <h5 id="ingresosPanel" class="mb-0"></h5>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-xl-3">
-                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                        <i class="fa fa-chart-pie fa-3x text-primary"></i>
+                    <div class="bg-light rounded shadow-sm d-flex align-items-center justify-content-between p-4">
+                        <i class="fa fa-chart-pie fa-3x text-primary opacity-75"></i>
                         <div class="ms-3">
                             <p class="mb-2 fs-4">% Wallet</p>
                             <h5 class="mb-0">80%</h5>
@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-xl-3">
-                    <div class="bg-success rounded d-flex align-items-center justify-content-between p-4">
+                    <div class="bg-success opacity-75 rounded d-flex align-items-center justify-content-between p-4">
                         <i class="fa fa-chart-line fa-3x text-light"></i>
                         <div></div>
                         <div class="ms-3">
@@ -71,8 +71,8 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-xl-3">
-                    <div class="bg-danger rounded d-flex align-items-center justify-content-between p-4">
-                        <i class="fa fa-exclamation-triangle fa-3x text-light"></i>
+                    <div class="bg-danger rounded opacity-75 d-flex align-items-center justify-content-between p-4">
+                        <i class="fa fa-exclamation-triangle  fa-3x text-light"></i>
                         <div class="ms-3">
                             <p class="mb-2 text-light fs-4">Egresos Mes</p>
                             <h5 class="mb-0 text-light">$167043</h5>
@@ -80,56 +80,85 @@
                     </div>
                 </div>
             </div>
+            <div class="row justify-content-center m-3 ">
+                <div class="col-6 ">
+                    <div
+                        class="bg-light rounded d-flex flex-column align-items-center justify-content-center p-2 shadow-sm ">
+                        <i class="fa fa-upload fa-3x text-primary opacity-75"></i>
+                        <div class="pt-3">
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#modalIngresoGasto"
+                                class="btn btn-primary">NUEVO Ingreso o Gasto</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-    
+
 
     </div>
-    
+
     <div class="">
         <table class="table">
             <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Descripcion</th>
-                <th scope="col">Monto</th>
-                <th scope="col">Fecha</th>
-                <th scope="col">Accion</th>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Monto</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Accion</th>
 
-              </tr>
+                </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Tarjeta de credito</td>
-                <td>$11111</td>
-                <td>03/06/2023</td>
-                <td>
-                    <button type="button" class="btn btn-outline-primary">Modificar</button>
-                    <button type="button" class="btn btn-outline-primary">Eliminar</button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Impuestos</td>
-                <td>$22222</td>
-                <td>04/04/2023</td>
-                <td>
-                    <button type="button" class="btn btn-outline-primary">Modificar</button>
-                    <button type="button" class="btn btn-outline-primary">Eliminar</button>
-                </td>
-              </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Tarjeta de credito</td>
+                    <td>$11111</td>
+                    <td>03/06/2023</td>
+                    <td>
+                        <button type="button" class="btn btn-outline-primary">Modificar</button>
+                        <button type="button" class="btn btn-outline-primary">Eliminar</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Impuestos</td>
+                    <td>$22222</td>
+                    <td>04/04/2023</td>
+                    <td>
+                        <button type="button" class="btn btn-outline-primary">Modificar</button>
+                        <button type="button" class="btn btn-outline-primary">Eliminar</button>
+                    </td>
+                </tr>
             </tbody>
-          </table>
+        </table>
     </div>
 
-
+    <div class="modal fade" id="modalIngresoGasto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
+    <script src="objetos.js"></script>
     <script src="01.js"></script>
-    <script src="objeto.js"></script>
+
 
 </body>
 

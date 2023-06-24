@@ -47,7 +47,7 @@
                         <i class="fa fa-university fa-3x text-primary opacity-75"></i>
                         <div class="ms-3">
                             <p class="mb-2 fs-4">Disponible</p>
-                            <h5 id="ingresosPanel" class="mb-0"></h5>
+                            <h5 id="restantePanel" class="mb-0"></h5>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                         <i class="fa fa-chart-pie fa-3x text-primary opacity-75"></i>
                         <div class="ms-3">
                             <p class="mb-2 fs-4">% Wallet</p>
-                            <h5 class="mb-0">80%</h5>
+                            <h5 id="porcentajePanel" class="mb-0"></h5>
                         </div>
                     </div>
                 </div>
@@ -65,8 +65,8 @@
                         <i class="fa fa-chart-line fa-3x text-light"></i>
                         <div></div>
                         <div class="ms-3">
-                            <p class="mb-2 text-light fs-4">Ingresos Mes</p>
-                            <h5 class="mb-0 text-light">$450000</h5>
+                            <p class="mb-2 text-light fs-4">Ingresoss</p>
+                            <h5 id="ingresosPanel" class="mb-0 text-light"></h5>
                         </div>
                     </div>
                 </div>
@@ -74,20 +74,20 @@
                     <div class="bg-danger rounded opacity-75 d-flex align-items-center justify-content-between p-4">
                         <i class="fa fa-exclamation-triangle  fa-3x text-light"></i>
                         <div class="ms-3">
-                            <p class="mb-2 text-light fs-4">Egresos Mes</p>
-                            <h5 class="mb-0 text-light">$167043</h5>
+                            <p class="mb-2 text-light fs-4">Gastos</p>
+                            <h5 id="egresosPanel" class="mb-0 text-light"></h5>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-center m-3 ">
+            <div class="row justify-content-center m-3  ">
                 <div class="col-6 ">
                     <div
-                        class="bg-light rounded d-flex flex-column align-items-center justify-content-center p-2 shadow-sm ">
-                        <i class="fa fa-upload fa-3x text-primary opacity-75"></i>
+                        class="bg-light rounded  d-flex flex-column align-items-center justify-content-center p-2 shadow-sm ">
+                        <i class="fa fa-upload fa-3x text-primary opacity-75 "></i>
                         <div class="pt-3">
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#modalIngresoGasto"
-                                class="btn btn-primary">NUEVO Ingreso o Gasto</button>
+                            <button type="button " data-bs-toggle="modal" data-bs-target="#modalIngresoGasto"
+                                class="btn btn-lg btn-primary opacity-75">NUEVO Ingreso o Gasto</button>
                         </div>
                     </div>
                 </div>
@@ -99,10 +99,9 @@
     </div>
 
     <div class="">
-        <table class="table">
+        <table class="table m-3 text-center">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Descripcion</th>
                     <th scope="col">Monto</th>
                     <th scope="col">Fecha</th>
@@ -110,44 +109,50 @@
 
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Tarjeta de credito</td>
-                    <td>$11111</td>
-                    <td>03/06/2023</td>
-                    <td>
-                        <button type="button" class="btn btn-outline-primary">Modificar</button>
-                        <button type="button" class="btn btn-outline-primary">Eliminar</button>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Impuestos</td>
-                    <td>$22222</td>
-                    <td>04/04/2023</td>
-                    <td>
-                        <button type="button" class="btn btn-outline-primary">Modificar</button>
-                        <button type="button" class="btn btn-outline-primary">Eliminar</button>
-                    </td>
-                </tr>
+            <tbody id="movimientoDetallados">
+
             </tbody>
         </table>
     </div>
 
     <div class="modal fade" id="modalIngresoGasto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <div class="modal-dialog ">
+            <div class="modal-content ">
+                <div class="modal-header ">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Ingresos o Gastos</h1>
+
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    ...
+                <div class="modal-body ">
+                    <p class="">Aqui debes ingresar el nuevo movimiento</p>
+                    <button type="button " class="btn btn-success active" data-bs-toggle="button"
+                        aria-pressed="true">Ingreso</button>
+                    <button type="button" class="btn btn-danger active " data-bs-toggle="button"
+                        aria-pressed="true">Gasto</button>
+
+                    <select class="form-select mt-4" aria-label="Default select example">
+                        <option selected>Selecciona tu ingreso:</option>
+                        <option value="1">Sueldo</option>
+                        <option value="2">Aguinaldo</option>
+                        <option value="3">Extra</option>
+                    </select>
+
+                    <select class="form-select mt-4 " aria-label="Default select example">
+                        <option selected>Selecciona tu gasto:</option>
+                        <option value="1">Tarjeta de credito</option>
+                        <option value="2">Impuestos</option>
+                        <option value="3">Vehiculo</option>
+                        <option value="4">Supermercado</option>
+                        <option value="5">Extra</option>
+
+                    </select>
+
+                    <input type="text" class="form-control mt-4" placeholder="Monto $$$" aria-label="First name">
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    <button type="button" class="btn btn-primary">Cargar</button>
                 </div>
             </div>
         </div>
@@ -158,7 +163,7 @@
         crossorigin="anonymous"></script>
     <script src="objetos.js"></script>
     <script src="01.js"></script>
-
+    <script src="dashboard.js"></script>
 
 </body>
 

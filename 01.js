@@ -1,10 +1,9 @@
 
-
-// // Variables globales
-// let elegirOpcion = 0;
-// let mayorConsumo = 0;
-// let nombreMayorMotivo = '';
-// let nivelMes;
+// Variables globales
+let elegirOpcion = 0;
+let mayorConsumo = 0;
+let nombreMayorMotivo = '';
+let nivelMes;
 // // las 3 principales opciones del usuario
 // //elegirOpcion = parseInt(prompt("Bienvenido " + persona.nombre + " a tu calculadora de gastos. Que necesitas hacer: \n1-Ingresos ⬆️\n2-Gastos ⬇️ \n3-Mostrar Status(salir) 📉"));
 
@@ -69,7 +68,7 @@
 
 //     elegirOpcion = parseInt(prompt("Gracias " + persona.nombre + " el valor fue agregado correctamente, te gustaria seguir agregando? \n1-Ingresos ⬆️\n2-Gastos ⬇️\n3-Mostrar Status 📉"));
 // }
-// CalculateWallet(persona.sumaIngreso(), persona.sumaGasto());
+CalculateWallet(persona.sumaIngreso(), persona.sumaGasto());
 // //metodo para agrupar gastos por motivo
 // obtenerMayorConsumo();
 
@@ -92,29 +91,22 @@
 // }
 
 
-// elegirOpcion = parseInt(prompt(`Hola ${persona.nombre}\nTus ingresos este mes fueron: \$${persona.sumaIngreso()}\nTus Gastos este mes fueron: \$${persona.sumaGasto()}.\nAun tienes disponible: \$${persona.balanceTotal}.\nQuedan en tu billetera un el ${persona.porcentualBilletera}% de tus ingresos.\n Este mes tu mayor consumo fue: $${mayorConsumo} en ${nombreMayorMotivo}
-// \nConsejo: ${nivelMes}
-// \n-----------Programa finalizado----------\n01-Salir`));
+//Funcion para calcular restante que queda en la billetera
+function CalculateWallet(incr, decr) {
+    persona.balanceTotal = incr - decr;
+    //console.log(persona.balanceTotal);
+    // Round para redondeo
+    persona.porcentualBilletera = Math.round(((incr - decr) / incr) * 100);
+    if ((persona.porcentualBilletera >= 1) && (persona.porcentualBilletera <= 10)) {
+        nivelMes = "Verifica tus margenes, estas cerca que quedarte sin dinero";
+    } else if ((persona.porcentualBilletera >= 11) && (persona.porcentualBilletera <= 30)) {
+        nivelMes = "Bien, buena administracion";
+    } else if ((persona.porcentualBilletera >= 31) && (persona.porcentualBilletera <= 50)) {
+        nivelMes = "Es un gran Mes! sigue asi!";
+    } else {
+        nivelMes = "Es un excelente mes para Ahorrar capital";
 
-// //Funcion para calcular restante que queda en la billetera
-// function CalculateWallet(incr, decr) {
-//     persona.balanceTotal = incr - decr;
-//     //console.log(persona.balanceTotal);
-//     // Round para redondeo
-//     persona.porcentualBilletera = Math.round(((incr - decr) / incr) * 100);
-//     if ((persona.porcentualBilletera >= 1) && (persona.porcentualBilletera <= 10)) {
-//         nivelMes = "Verifica tus margenes, estas cerca que quedarte sin dinero";
-//     } else if ((persona.porcentualBilletera >= 11) && (persona.porcentualBilletera <= 30)) {
-//         nivelMes = "Bien, buena administracion";
-//     } else if ((persona.porcentualBilletera >= 31) && (persona.porcentualBilletera <= 50)) {
-//         nivelMes = "Es un gran Mes! sigue asi!";
-//     } else {
-//         nivelMes = "Es un excelente mes para Ahorrar capital";
-
-//     }
-//     // console.log("Quedan en tu billetera un total de: $" + persona.balanceTotal + "quedan en tu billetera un el " + persona.porcentualBilletera + "% de tus ingresos");
-// };
-
-// let IngresosDashboard = document.getElementById('ingresosPanel');
-// IngresosDashboard.innerText = `$${persona.sumaIngreso()}`;
+    }
+    // console.log("Quedan en tu billetera un total de: $" + persona.balanceTotal + "quedan en tu billetera un el " + persona.porcentualBilletera + "% de tus ingresos");
+};
 

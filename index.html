@@ -125,34 +125,35 @@
                 </div>
                 <div class="modal-body ">
                     <p class="">Aqui debes ingresar el nuevo movimiento</p>
-                    <button type="button " class="btn btn-success active" data-bs-toggle="button"
+                    <button id="buttonIng" type="button " class="btn btn-success botonAdd" data-bs-toggle="button"
                         aria-pressed="true">Ingreso</button>
-                    <button type="button" class="btn btn-danger active " data-bs-toggle="button"
+                    <button id="buttonGas" type="button" class="btn btn-danger  botonAdd" data-bs-toggle="button"
                         aria-pressed="true">Gasto</button>
 
-                    <select class="form-select mt-4" aria-label="Default select example">
+                    <select id="selectIng" class="form-select mt-4" aria-label="Default select example" disabled>
                         <option selected>Selecciona tu ingreso:</option>
-                        <option value="1">Sueldo</option>
-                        <option value="2">Aguinaldo</option>
-                        <option value="3">Extra</option>
+                        <option value="Sueldo">Sueldo</option>
+                        <option value="Aguinaldo">Aguinaldo</option>
+                        <option value="Extra">Extra</option>
                     </select>
 
-                    <select class="form-select mt-4 " aria-label="Default select example">
+                    <select id="selectGas" class="form-select mt-4 " aria-label="Default select example" disabled>
                         <option selected>Selecciona tu gasto:</option>
-                        <option value="1">Tarjeta de credito</option>
-                        <option value="2">Impuestos</option>
-                        <option value="3">Vehiculo</option>
-                        <option value="4">Supermercado</option>
-                        <option value="5">Extra</option>
+                        <option value="Tarjeta de credito">Tarjeta de credito</option>
+                        <option value="Impuestos">Impuestos</option>
+                        <option value="Vehiculo">Vehiculo</option>
+                        <option value="Supermercado">Supermercado</option>
+                        <option value="Extra">Extra</option>
 
                     </select>
 
-                    <input type="text" class="form-control mt-4" placeholder="Monto $$$" aria-label="First name">
+                    <input id="monto" type="text" class="form-control mt-4" placeholder="Monto $$$"
+                        aria-label="First name">
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
-                    <button type="button" class="btn btn-primary">Cargar</button>
+                    <button id="cargarMovimiento" type="button" class="btn btn-primary">Cargar</button>
                 </div>
             </div>
         </div>
@@ -164,6 +165,8 @@
     <script src="objetos.js"></script>
     <script src="01.js"></script>
     <script src="dashboard.js"></script>
+    <script src="formAdd.js"></script>
+
 
 </body>
 

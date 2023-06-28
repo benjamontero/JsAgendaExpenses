@@ -1,6 +1,6 @@
 
 // Variables globales
-let elegirOpcion = 0;
+//let elegirOpcion = 0;
 let mayorConsumo = 0;
 let nombreMayorMotivo = '';
 let nivelMes;
@@ -8,10 +8,7 @@ let nivelMes;
 // //elegirOpcion = parseInt(prompt("Bienvenido " + persona.nombre + " a tu calculadora de gastos. Que necesitas hacer: \n1-Ingresos ⬆️\n2-Gastos ⬇️ \n3-Mostrar Status(salir) 📉"));
 
 
-// while (elegirOpcion != 3) {
-//     // captura la fecha del dia para guardar en el array
-//     let fecha = new Date().toLocaleDateString();
-//     // Con esto elegiremos el ingreso/Gasto sectorizado
+
 //     switch (elegirOpcion) {
 //         case 1:
 //             let tipoDeIngreso = parseInt(prompt("tipo de ingreso: \n1-Sueldo 💵 \n2-Aguinaldo💰  \n3-Extra 💵"));

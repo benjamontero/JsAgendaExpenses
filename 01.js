@@ -1,97 +1,140 @@
-
-// Variables globales
-//let elegirOpcion = 0;
+//Variables para utilizar en el calculo de dashboard
 let mayorConsumo = 0;
 let nombreMayorMotivo = '';
 let nivelMes;
-// // las 3 principales opciones del usuario
-// //elegirOpcion = parseInt(prompt("Bienvenido " + persona.nombre + " a tu calculadora de gastos. Que necesitas hacer: \n1-Ingresos ⬆️\n2-Gastos ⬇️ \n3-Mostrar Status(salir) 📉"));
+let ingresosDashboard = document.getElementById('ingresosPanel');
+let egresosDashboard = document.getElementById('egresosPanel');
+let porcentualDashboard = document.getElementById('porcentajePanel');
+let restanteDashboard = document.getElementById('restantePanel');
+// variables para capturar los datos del modal
+let botones = document.getElementsByClassName('botonAdd');
+let selectGas = document.getElementById('selectGas');
+let selectIng = document.getElementById('selectIng');
+let montoMovimiento = document.getElementById('monto');
+let botonCargar = document.getElementById('cargarMovimiento');
+//Variables para los botones que generaran la lista de gasto
+let listaIngresos = document.getElementById('listadoDeIngresos');
+let listaGastos = document.getElementById('listadoDeEgresos')
+//Variable para capturar donde se generara la lista de gastos
+let listaMovimientos = document.getElementById('movimientoDetallados');
 
 
 
-//     switch (elegirOpcion) {
-//         case 1:
-//             let tipoDeIngreso = parseInt(prompt("tipo de ingreso: \n1-Sueldo 💵 \n2-Aguinaldo💰  \n3-Extra 💵"));
-//             if (tipoDeIngreso === 1) {
-//                 tipoDeIngreso = "Sueldo";
-//             }
-//             else if (tipoDeIngreso === 2) {
-//                 tipoDeIngreso = "Aguinaldo";
-//             }
-//             else {
-//                 tipoDeIngreso = "Extra";
-//             }
-
-//             let ingreso = parseInt(prompt("Monto del ingreso:"));
-//             // formara el array para push
-//             let nuevoIngreso = {
-//                 motivo: tipoDeIngreso,
-//                 monto: ingreso,
-//                 fecha: fecha
-//             }
-//             persona.agregarIngreso(nuevoIngreso);
-//             persona.sumaIngreso();
-//             break;
-//         case 2:
-//             let tipoDeGasto = parseInt(prompt("tipo de Gasto: \n1-Tarjeta de credito💳 \n2-Impuestos 📝\n3-Vehiculos 🚘\n4-Supermercado🛒 \n5-Extra 🛒"));
-//             if (tipoDeGasto === 1) {
-//                 tipoDeGasto = "Tajeta de Credito";
-//             }
-//             else if (tipoDeGasto === 2) {
-//                 tipoDeGasto = "Impuestos";
-//             }
-//             else if (tipoDeGasto === 3) {
-//                 tipoDeGasto = "Vehiculos";
-//             }
-//             else if (tipoDeGasto === 4) {
-//                 tipoDeGasto = "Supermercado";
-//             }
-//             else {
-//                 tipoDeGasto = "Extra";
-//             }
-//             let gasto = parseInt(prompt("Monto del Gasto:"));
-
-//             // formara el array para push
-//             let nuevoGasto = {
-//                 motivo: tipoDeGasto,
-//                 monto: gasto,
-//                 fecha: fecha
-//             }
-//             persona.agregarGasto(nuevoGasto);
-//             persona.sumaGasto();
-//             break;
-
-//     }
-
-//     elegirOpcion = parseInt(prompt("Gracias " + persona.nombre + " el valor fue agregado correctamente, te gustaria seguir agregando? \n1-Ingresos ⬆️\n2-Gastos ⬇️\n3-Mostrar Status 📉"));
-// }
 CalculateWallet(persona.sumaIngreso(), persona.sumaGasto());
-// //metodo para agrupar gastos por motivo
-// obtenerMayorConsumo();
+seleccionIngresoGasto();
+seleccionMovimiento();
 
-// function obtenerMayorConsumo() {
-//     const motivos = ["Tarjeta de credito", "Impuestos", "Vehiculo", "Supermercado", "Extra"];
+let elegirOpcion = '';
+let movimiento = [];
+let IngGas;
+let fecha = new Date().toLocaleDateString();
 
-//     motivos.forEach((motivo => {
-//         // filtra en el array principal y genera otro array si cumple con la cond
-//         const gastosFiltrados = persona.gastos.movimientos.filter((gasto) => gasto.motivo === motivo);
-//         // calcula cuando total de montos en los array de gastos filtrados
-//         const gastosTotalFiltrado = gastosFiltrados.reduce((acumulador, gasto) => acumulador + gasto.monto, 0);
-//         // calculara entre todos los valores que vaya teniendo gastostotalfiltrado para poder comparar
-//         // console.log(gastosTotalFiltrado);
-//         if (mayorConsumo < gastosTotalFiltrado) {
-//             mayorConsumo = gastosTotalFiltrado;
-//             nombreMayorMotivo = motivo;
-//         }
-//     }
-//     ))
-// }
 
+botonCargar.addEventListener('click', () => {
+    elegirOpcion = {
+        motivo: elegirOpcion,
+        monto: parseInt(montoMovimiento.value),
+        fecha: fecha
+    }
+    if (IngGas === 1) {
+        persona.agregarIngreso(elegirOpcion);
+        persona.sumaIngreso();
+    } else {
+        persona.agregarGasto(elegirOpcion);
+        persona.sumaGasto();
+        console.log(persona.sumaGasto())
+    }
+    console.table('gasto/ingreso agregado');
+    limpiarMovimiento();
+    CalculateWallet(persona.sumaIngreso(), persona.sumaGasto());
+    mostrarListado();
+
+});
+mostrarListado();
+
+
+
+//ACCION DE BOTON INGRESO/GASTO
+function seleccionIngresoGasto() {
+    for (const boton of botones) {
+        boton.addEventListener('click', () => {
+            //BORRA TODOS LOS ACTIVE
+            for (const otroBoton of botones) {
+                otroBoton.classList.remove('active');
+            }
+            if (boton.id === "buttonIng") {
+                console.log('click en ingreso')
+                selectIng.disabled = false;
+                selectGas.disabled = true;
+                IngGas = 1;
+            } else {
+                console.log('click en gasto')
+                selectGas.disabled = false;
+                selectIng.disabled = true;
+                IngGas = 2;
+            }
+            boton.classList.add('active');
+        });
+    }
+}
+function seleccionMovimiento() {
+    selectIng.addEventListener('change', () => {
+        elegirOpcion = selectIng.value;
+        console.log(elegirOpcion);
+    });
+    selectGas.addEventListener('change', () => {
+        elegirOpcion = selectGas.value;
+        console.log('elegiste un gasto con el motivo', elegirOpcion);
+    });
+}
+
+
+listaGastos.addEventListener('click', () => {
+    mostrarListado('gastos');
+});
+
+listaIngresos.addEventListener('click', () => {
+    mostrarListado('ingresos');
+});
+
+function mostrarListado(tipo) {
+    listaMovimientos.innerHTML = "";
+
+    if (tipo === 'ingresos') {
+        // Mostrar lista de ingresos
+        for (const ingreso of persona.ingresos.movimientos) {
+            let movimiento = document.createElement('tr');
+            movimiento.innerHTML = `
+                <td>${ingreso.motivo}</td>
+                <td>$${ingreso.monto}</td>
+                <td>${ingreso.fecha}</td>
+            `;
+            listaMovimientos.appendChild(movimiento);
+        }
+    } else if (tipo === 'gastos') {
+        // Mostrar lista de gastos
+        for (const gasto of persona.gastos.movimientos) {
+            let movimiento = document.createElement('tr');
+            movimiento.innerHTML = `
+                <td>${gasto.motivo}</td>
+                <td>$${gasto.monto}</td>
+                <td>${gasto.fecha}</td>
+            `;
+            listaMovimientos.appendChild(movimiento);
+        }
+    }
+
+    // Mostrar la lista de movimientos
+    if (listaMovimientos.classList.contains('d-none')) {
+        listaMovimientos.classList.remove('d-none');
+    }
+}
 
 //Funcion para calcular restante que queda en la billetera
+
+
 function CalculateWallet(incr, decr) {
     persona.balanceTotal = incr - decr;
-    //console.log(persona.balanceTotal);
     // Round para redondeo
     persona.porcentualBilletera = Math.round(((incr - decr) / incr) * 100);
     if ((persona.porcentualBilletera >= 1) && (persona.porcentualBilletera <= 10)) {
@@ -102,8 +145,20 @@ function CalculateWallet(incr, decr) {
         nivelMes = "Es un gran Mes! sigue asi!";
     } else {
         nivelMes = "Es un excelente mes para Ahorrar capital";
-
     }
-    // console.log("Quedan en tu billetera un total de: $" + persona.balanceTotal + "quedan en tu billetera un el " + persona.porcentualBilletera + "% de tus ingresos");
+    //refresca dashboard
+    restanteDashboard.innerText = `$${[persona.balanceTotal]}`;
+    porcentualDashboard.innerText = `${[persona.porcentualBilletera]}%`;
+    egresosDashboard.innerText = `$${persona.sumaGasto()}`;
+    ingresosDashboard.innerText = `$${persona.sumaIngreso()}`;
 };
 
+
+//LIMPIADOR CAMPOS MODAL
+function limpiarMovimiento() {
+    selectGas.selectedIndex = 0;
+    selectIng.selectedIndex = 0;
+    selectGas.disabled = true;
+    selectIng.disabled = true;
+    montoMovimiento.value = "";
+};

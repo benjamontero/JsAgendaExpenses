@@ -61,9 +61,14 @@ const persona =
     //  metodos para agregar al gastos/ingresoss
     agregarIngreso(ingreso) {
         this.ingresos.movimientos.push(ingreso);
+        localStorage.setItem('persona', JSON.stringify(persona));
+
+
     },
     agregarGasto(gasto) {
         this.gastos.movimientos.push(gasto);
+        localStorage.setItem('persona', JSON.stringify(persona));
+
     },
     //  metodos para mostrar el total de gastos/ingresos
     sumaIngreso() {

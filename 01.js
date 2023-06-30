@@ -18,29 +18,36 @@ let listaGastos = document.getElementById('listadoDeEgresos')
 //Variable para capturar donde se generara la lista de gastos
 let listaMovimientos = document.getElementById('movimientoDetallados');
 
-
+// Verificar si existen datos en el almacenamiento local
+if (localStorage.getItem('persona')) {
+    // Obtener los datos almacenados y asignarlos al objeto persona
+    const personaData = JSON.parse(localStorage.getItem('persona'));
+    Object.assign(persona, personaData);
+}
 
 CalculateWallet(persona.sumaIngreso(), persona.sumaGasto());
 seleccionIngresoGasto();
 seleccionMovimiento();
 
 let elegirOpcion = '';
-let movimiento = [];
+let movimiento;
+let elemento = [];
 let IngGas;
 let fecha = new Date().toLocaleDateString();
 
 
 botonCargar.addEventListener('click', () => {
-    elegirOpcion = {
+    elemento = {
         motivo: elegirOpcion,
         monto: parseInt(montoMovimiento.value),
         fecha: fecha
     }
+
     if (IngGas === 1) {
-        persona.agregarIngreso(elegirOpcion);
+        persona.agregarIngreso(elemento);
         persona.sumaIngreso();
     } else {
-        persona.agregarGasto(elegirOpcion);
+        persona.agregarGasto(elemento);
         persona.sumaGasto();
         console.log(persona.sumaGasto())
     }

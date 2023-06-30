@@ -1,186 +1,148 @@
-// Preentrega 2 = persona es un objeto que contiene 2 arrays de objetos (gastos e ingresos)
-const persona =
-{
-    nombre: "Benjamin",
-    balanceTotal: 0,
-    porcentualBilletera: 0,
-    moneda: "Arg",
-    ingresos: {
-        movimientos: [
-            {
-                motivo: 'Sueldo',
-                monto: 250000,
-                fecha: new Date('06/01/23').toLocaleDateString()
-            },
-            {
-                motivo: 'Aguinaldo',
-                monto: 125000,
-                fecha: new Date('07/01/23').toLocaleDateString()
-            }
-        ]
-
-    },
-    gastos: {
-        movimientos: [
-            {
-                motivo: 'Supermercado',
-                monto: 18450,
-                fecha: new Date('06/02/23').toLocaleDateString()
-            },
-            {
-                motivo: 'Tarjeta de credito',
-                monto: 32333,
-                fecha: new Date('06/05/23').toLocaleDateString()
-            },
-            {
-                motivo: 'Tarjeta de credito',
-                monto: 18234,
-                fecha: new Date('06/07/23').toLocaleDateString()
-            },
-            {
-                motivo: 'Impuestos',
-                monto: 4300,
-                fecha: new Date('06/01/23').toLocaleDateString()
-            },
-            {
-                motivo: 'Vehiculo',
-                monto: 15300,
-                fecha: new Date('06/04/23').toLocaleDateString()
-            },
-            {
-                motivo: 'Extra',
-                monto: 1200,
-                fecha: new Date('06/04/23').toLocaleDateString()
-            },
-            {
-                motivo: 'Extra',
-                monto: 3500,
-                fecha: new Date('06/06/23').toLocaleDateString()
-            }
-        ],
-    },
-    // Preentrega 2: metodos para agregar al gastos/ingresoss
-    agregarIngreso(ingreso) {
-        this.ingresos.movimientos.push(ingreso);
-    },
-    agregarGasto(gasto) {
-        this.gastos.movimientos.push(gasto);
-    },
-    // Preentrega 2: metodos para mostrar el total de gastos/ingresos
-    sumaIngreso() {
-        const totalIngresos = this.ingresos.movimientos.reduce((acumulador, ingreso) => acumulador + ingreso.monto, 0)
-        return totalIngresos;
-    },
-    sumaGasto() {
-        const totalGastos = this.gastos.movimientos.reduce((acumulador, gasto) => acumulador + gasto.monto, 0)
-        console.log(totalGastos);
-        return totalGastos;
-
-    },
-
-}
-// Variables globales
-
+//Variables para utilizar en el calculo de dashboard
 let mayorConsumo = 0;
 let nombreMayorMotivo = '';
 let nivelMes;
-// las 3 principales opciones del usuario
-let elegirOpcion = parseInt(prompt("Bienvenido " + persona.nombre + " a tu calculadora de gastos. Que necesitas hacer: \n1-Ingresos ⬆️\n2-Gastos ⬇️ \n3-Mostrar Status(salir) 📉"));
+let ingresosDashboard = document.getElementById('ingresosPanel');
+let egresosDashboard = document.getElementById('egresosPanel');
+let porcentualDashboard = document.getElementById('porcentajePanel');
+let restanteDashboard = document.getElementById('restantePanel');
+// variables para capturar los datos del modal
+let botones = document.getElementsByClassName('botonAdd');
+let selectGas = document.getElementById('selectGas');
+let selectIng = document.getElementById('selectIng');
+let montoMovimiento = document.getElementById('monto');
+let botonCargar = document.getElementById('cargarMovimiento');
+//Variables para los botones que generaran la lista de gasto
+let listaIngresos = document.getElementById('listadoDeIngresos');
+let listaGastos = document.getElementById('listadoDeEgresos')
+//Variable para capturar donde se generara la lista de gastos
+let listaMovimientos = document.getElementById('movimientoDetallados');
+
+// Verificar si existen datos en el almacenamiento local
+if (localStorage.getItem('persona')) {
+    // Obtener los datos almacenados y asignarlos al objeto persona
+    const personaData = JSON.parse(localStorage.getItem('persona'));
+    Object.assign(persona, personaData);
+}
+
+CalculateWallet(persona.sumaIngreso(), persona.sumaGasto());
+seleccionIngresoGasto();
+seleccionMovimiento();
+
+let elegirOpcion = '';
+let movimiento;
+let elemento = [];
+let IngGas;
+let fecha = new Date().toLocaleDateString();
 
 
-while (elegirOpcion != 3) {
-    //Preentrega 2: captura la fecha del dia para guardar en el array
-    let fecha = new Date().toLocaleDateString();
-    // Con esto elegiremos el ingreso/Gasto sectorizado
-    switch (elegirOpcion) {
-        case 1:
-            let tipoDeIngreso = parseInt(prompt("tipo de ingreso: \n1-Sueldo 💵 \n2-Aguinaldo💰  \n3-Extra 💵"));
-            if (tipoDeIngreso === 1) {
-                tipoDeIngreso = "Sueldo";
-            }
-            else if (tipoDeIngreso === 2) {
-                tipoDeIngreso = "Aguinaldo";
-            }
-            else {
-                tipoDeIngreso = "Extra";
-            }
-
-            let ingreso = parseInt(prompt("Monto del ingreso:"));
-            //Preentrega 2: formara el array para push
-            let nuevoIngreso = {
-                motivo: tipoDeIngreso,
-                monto: ingreso,
-                fecha: fecha
-            }
-            persona.agregarIngreso(nuevoIngreso);
-            persona.sumaIngreso();
-            break;
-        case 2:
-            let tipoDeGasto = parseInt(prompt("tipo de Gasto: \n1-Tarjeta de credito💳 \n2-Impuestos 📝\n3-Vehiculos 🚘\n4-Supermercado🛒 \n5-Extra 🛒"));
-            if (tipoDeGasto === 1) {
-                tipoDeGasto = "Tajeta de Credito";
-            }
-            else if (tipoDeGasto === 2) {
-                tipoDeGasto = "Impuestos";
-            }
-            else if (tipoDeGasto === 3) {
-                tipoDeGasto = "Vehiculos";
-            }
-            else if (tipoDeGasto === 4) {
-                tipoDeGasto = "Supermercado";
-            }
-            else {
-                tipoDeGasto = "Extra";
-            }
-            let gasto = parseInt(prompt("Monto del Gasto:"));
-
-            //Preentrega 2: formara el array para push
-            let nuevoGasto = {
-                motivo: tipoDeGasto,
-                monto: gasto,
-                fecha: fecha
-            }
-            persona.agregarGasto(nuevoGasto);
-            persona.sumaGasto();
-            break;
-
+botonCargar.addEventListener('click', () => {
+    elemento = {
+        motivo: elegirOpcion,
+        monto: parseInt(montoMovimiento.value),
+        fecha: fecha
     }
 
-    elegirOpcion = parseInt(prompt("Gracias " + persona.nombre + " el valor fue agregado correctamente, te gustaria seguir agregando? \n1-Ingresos ⬆️\n2-Gastos ⬇️\n3-Mostrar Status 📉"));
+    if (IngGas === 1) {
+        persona.agregarIngreso(elemento);
+        persona.sumaIngreso();
+    } else {
+        persona.agregarGasto(elemento);
+        persona.sumaGasto();
+        console.log(persona.sumaGasto())
+    }
+    console.table('gasto/ingreso agregado');
+    limpiarMovimiento();
+    CalculateWallet(persona.sumaIngreso(), persona.sumaGasto());
+    mostrarListado();
+
+});
+mostrarListado();
+
+
+
+//ACCION DE BOTON INGRESO/GASTO
+function seleccionIngresoGasto() {
+    for (const boton of botones) {
+        boton.addEventListener('click', () => {
+            //BORRA TODOS LOS ACTIVE
+            for (const otroBoton of botones) {
+                otroBoton.classList.remove('active');
+            }
+            if (boton.id === "buttonIng") {
+                console.log('click en ingreso')
+                selectIng.disabled = false;
+                selectGas.disabled = true;
+                IngGas = 1;
+            } else {
+                console.log('click en gasto')
+                selectGas.disabled = false;
+                selectIng.disabled = true;
+                IngGas = 2;
+            }
+            boton.classList.add('active');
+        });
+    }
 }
-CalculateWallet(persona.sumaIngreso(), persona.sumaGasto());
-//metodo para agrupar gastos por motivo 
-obtenerMayorConsumo();
+function seleccionMovimiento() {
+    selectIng.addEventListener('change', () => {
+        elegirOpcion = selectIng.value;
+        console.log(elegirOpcion);
+    });
+    selectGas.addEventListener('change', () => {
+        elegirOpcion = selectGas.value;
+        console.log('elegiste un gasto con el motivo', elegirOpcion);
+    });
+}
 
-function obtenerMayorConsumo() {
-    const motivos = ["Tarjeta de credito", "Impuestos", "Vehiculo", "Supermercado", "Extra"];
 
-    motivos.forEach((motivo => {
-        //Preentrega 2: filtra en el array principal y genera otro array si cumple con la cond
-        const gastosFiltrados = persona.gastos.movimientos.filter((gasto) => gasto.motivo === motivo);
-        //Preentrega 2: calcula cuando total de montos en los array de gastos filtrados
-        const gastosTotalFiltrado = gastosFiltrados.reduce((acumulador, gasto) => acumulador + gasto.monto, 0);
-        //Preentrega 2: calculara entre todos los valores que vaya teniendo gastostotalfiltrado para poder comparar
-        console.log(gastosTotalFiltrado);
-        if (mayorConsumo < gastosTotalFiltrado) {
-            mayorConsumo = gastosTotalFiltrado;
-            nombreMayorMotivo = motivo;
+listaGastos.addEventListener('click', () => {
+    mostrarListado('gastos');
+});
+
+listaIngresos.addEventListener('click', () => {
+    mostrarListado('ingresos');
+});
+
+function mostrarListado(tipo) {
+    listaMovimientos.innerHTML = "";
+
+    if (tipo === 'ingresos') {
+        // Mostrar lista de ingresos
+        for (const ingreso of persona.ingresos.movimientos) {
+            let movimiento = document.createElement('tr');
+            movimiento.innerHTML = `
+                <td>${ingreso.motivo}</td>
+                <td>$${ingreso.monto}</td>
+                <td>${ingreso.fecha}</td>
+            `;
+            listaMovimientos.appendChild(movimiento);
+        }
+    } else if (tipo === 'gastos') {
+        // Mostrar lista de gastos
+        for (const gasto of persona.gastos.movimientos) {
+            let movimiento = document.createElement('tr');
+            movimiento.innerHTML = `
+                <td>${gasto.motivo}</td>
+                <td>$${gasto.monto}</td>
+                <td>${gasto.fecha}</td>
+            `;
+            listaMovimientos.appendChild(movimiento);
         }
     }
-    ))
 
+    // Mostrar la lista de movimientos
+    if (listaMovimientos.classList.contains('d-none')) {
+        listaMovimientos.classList.remove('d-none');
+    }
 }
 
-
-elegirOpcion = parseInt(prompt(`Hola ${persona.nombre}\nTus ingresos este mes fueron: \$${persona.sumaIngreso()}\nTus Gastos este mes fueron: \$${persona.sumaGasto()}.\nAun tienes disponible: \$${persona.balanceTotal}.\nQuedan en tu billetera un el ${persona.porcentualBilletera}% de tus ingresos.\n Este mes tu mayor consumo fue: $${mayorConsumo} en ${nombreMayorMotivo}
-\nConsejo: ${nivelMes}
-\n-----------Programa finalizado----------\n01-Salir`));
-
 //Funcion para calcular restante que queda en la billetera
+
+
 function CalculateWallet(incr, decr) {
     persona.balanceTotal = incr - decr;
-    console.log(persona.balanceTotal);
-    //Preentrega 2: Round para redondeo
+    // Round para redondeo
     persona.porcentualBilletera = Math.round(((incr - decr) / incr) * 100);
     if ((persona.porcentualBilletera >= 1) && (persona.porcentualBilletera <= 10)) {
         nivelMes = "Verifica tus margenes, estas cerca que quedarte sin dinero";
@@ -190,10 +152,20 @@ function CalculateWallet(incr, decr) {
         nivelMes = "Es un gran Mes! sigue asi!";
     } else {
         nivelMes = "Es un excelente mes para Ahorrar capital";
-
     }
-    console.log("Quedan en tu billetera un total de: $" + persona.balanceTotal + "quedan en tu billetera un el " + persona.porcentualBilletera + "% de tus ingresos");
+    //refresca dashboard
+    restanteDashboard.innerText = `$${[persona.balanceTotal]}`;
+    porcentualDashboard.innerText = `${[persona.porcentualBilletera]}%`;
+    egresosDashboard.innerText = `$${persona.sumaGasto()}`;
+    ingresosDashboard.innerText = `$${persona.sumaIngreso()}`;
 };
 
 
-
+//LIMPIADOR CAMPOS MODAL
+function limpiarMovimiento() {
+    selectGas.selectedIndex = 0;
+    selectIng.selectedIndex = 0;
+    selectGas.disabled = true;
+    selectIng.disabled = true;
+    montoMovimiento.value = "";
+};

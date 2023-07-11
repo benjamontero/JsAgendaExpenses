@@ -6,17 +6,23 @@ let ingresosDashboard = document.getElementById('ingresosPanel');
 let egresosDashboard = document.getElementById('egresosPanel');
 let porcentualDashboard = document.getElementById('porcentajePanel');
 let restanteDashboard = document.getElementById('restantePanel');
-// variables para capturar los datos del modal
+// variables para CAPTURAR los datos del modal
 let botones = document.getElementsByClassName('botonAdd');
 let selectGas = document.getElementById('selectGas');
 let selectIng = document.getElementById('selectIng');
 let montoMovimiento = document.getElementById('monto');
 let botonCargar = document.getElementById('cargarMovimiento');
-//Variables para los botones que generaran la lista de gasto
+//Variables para los BOTONES que generaran las listas
 let listaIngresos = document.getElementById('listadoDeIngresos');
 let listaGastos = document.getElementById('listadoDeEgresos')
-//Variable para capturar donde se generara la lista de gastos
+//Variables para CAPTURAR donde se generara la lista 
 let listaMovimientos = document.getElementById('movimientoDetallados');
+//Variable para CAMBIO de monera
+const switchMoneda = document.getElementById('flexSwitchCheckDefault');
+
+
+
+
 
 // Verificar si existen datos en el almacenamiento local
 if (localStorage.getItem('persona')) {
@@ -24,7 +30,6 @@ if (localStorage.getItem('persona')) {
     const personaData = JSON.parse(localStorage.getItem('persona'));
     Object.assign(persona, personaData);
 }
-
 CalculateWallet(persona.sumaIngreso(), persona.sumaGasto());
 seleccionIngresoGasto();
 seleccionMovimiento();
@@ -34,7 +39,6 @@ let movimiento;
 let elemento = [];
 let IngGas;
 let fecha = new Date().toLocaleDateString();
-
 
 botonCargar.addEventListener('click', () => {
     elemento = {
@@ -57,15 +61,13 @@ botonCargar.addEventListener('click', () => {
     mostrarListado();
 
 });
-mostrarListado();
-
 
 
 //ACCION DE BOTON INGRESO/GASTO
 function seleccionIngresoGasto() {
     for (const boton of botones) {
         boton.addEventListener('click', () => {
-            //BORRA TODOS LOS ACTIVE
+            //DOM: BORRA TODOS LOS ACTIVE 
             for (const otroBoton of botones) {
                 otroBoton.classList.remove('active');
             }
@@ -154,10 +156,13 @@ function CalculateWallet(incr, decr) {
         nivelMes = "Es un excelente mes para Ahorrar capital";
     }
     //refresca dashboard
-    restanteDashboard.innerText = `$${[persona.balanceTotal]}`;
-    porcentualDashboard.innerText = `${[persona.porcentualBilletera]}%`;
+
+    restanteDashboard.innerText = `$${persona.balanceTotal}`;
+    porcentualDashboard.innerText = `${persona.porcentualBilletera}%`;
     egresosDashboard.innerText = `$${persona.sumaGasto()}`;
     ingresosDashboard.innerText = `$${persona.sumaIngreso()}`;
+    cambiarMoneda();
+
 };
 
 
@@ -169,3 +174,32 @@ function limpiarMovimiento() {
     selectIng.disabled = true;
     montoMovimiento.value = "";
 };
+
+function cambiarMoneda() {
+    //CONSUMIENDO API - para cambio de moneda en el dashboard
+    const URLDOLAR = 'https://api.bluelytics.com.ar/v2/latest';
+    fetch(URLDOLAR)
+        .then(respuesta => respuesta.json())
+        .then(datos => {
+            console.log(datos);
+            const cotizacionesBlue = datos.blue;
+            console.log(cotizacionesBlue.value_buy)
+
+            switchMoneda.addEventListener('change', () => {
+                if (switchMoneda.checked) {
+                    restanteDashboard.innerText = `USD ${Math.round(persona.balanceTotal / cotizacionesBlue.value_buy)}`;
+                    egresosDashboard.innerText = `USD ${Math.round(persona.sumaGasto() / cotizacionesBlue.value_buy)}`;
+                    ingresosDashboard.innerText = `USD ${Math.round(persona.sumaIngreso() / cotizacionesBlue.value_buy)}`;
+
+                } else {
+                    restanteDashboard.innerText = `$${persona.balanceTotal}`;
+                    porcentualDashboard.innerText = `${persona.porcentualBilletera}%`;
+                    egresosDashboard.innerText = `$${persona.sumaGasto()}`;
+                    ingresosDashboard.innerText = `$${persona.sumaIngreso()}`;
+                };
+            });
+        });
+}
+
+
+

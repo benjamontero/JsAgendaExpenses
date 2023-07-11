@@ -60,6 +60,12 @@ botonCargar.addEventListener('click', () => {
     CalculateWallet(persona.sumaIngreso(), persona.sumaGasto());
     mostrarListado();
 
+    Swal.fire(
+        'Excelente!',
+        'Tu Movimiento fue cargado!',
+        'Volver'
+    )
+
 });
 
 
@@ -170,8 +176,7 @@ function CalculateWallet(incr, decr) {
 function limpiarMovimiento() {
     selectGas.selectedIndex = 0;
     selectIng.selectedIndex = 0;
-    selectGas.disabled = true;
-    selectIng.disabled = true;
+    selectGas.disabled, selectIng.disabled = true;
     montoMovimiento.value = "";
 };
 
@@ -199,6 +204,8 @@ function cambiarMoneda() {
                 };
             });
         });
+
+
 }
 
 

@@ -7,6 +7,8 @@ let egresosDashboard = document.getElementById('egresosPanel');
 let porcentualDashboard = document.getElementById('porcentajePanel');
 let restanteDashboard = document.getElementById('restantePanel');
 // variables para CAPTURAR los datos del modal
+let buttonIng = document.getElementById('buttonIng');
+let buttonGas = document.getElementById('buttonGas');
 let botones = document.getElementsByClassName('botonAdd');
 let selectGas = document.getElementById('selectGas');
 let selectIng = document.getElementById('selectIng');
@@ -19,10 +21,6 @@ let listaGastos = document.getElementById('listadoDeEgresos')
 let listaMovimientos = document.getElementById('movimientoDetallados');
 //Variable para CAMBIO de monera
 const switchMoneda = document.getElementById('flexSwitchCheckDefault');
-
-
-
-
 
 // Verificar si existen datos en el almacenamiento local
 if (localStorage.getItem('persona')) {
@@ -41,35 +39,62 @@ let IngGas;
 let fecha = new Date().toLocaleDateString();
 
 botonCargar.addEventListener('click', () => {
-    elemento = {
-        motivo: elegirOpcion,
-        monto: parseInt(montoMovimiento.value),
-        fecha: fecha
-    }
+    //VALIDACION: Verifica si los campos cumplen con las condiciones //FALTA VALIDAR QUE NO ENTRE LETRAS
+    if (elegirOpcion !== "" && montoMovimiento.value !== "") {
+        elemento = {
+            motivo: elegirOpcion,
+            monto: parseInt(montoMovimiento.value),
+            fecha: fecha
+        };
 
-    if (IngGas === 1) {
-        persona.agregarIngreso(elemento);
-        persona.sumaIngreso();
+        if (IngGas === 1) {
+            persona.agregarIngreso(elemento);
+            persona.sumaIngreso();
+
+        } else {
+            persona.agregarGasto(elemento);
+            persona.sumaGasto();
+            console.log(persona.sumaGasto())
+        };
+
+
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Movimiento Cargado',
+            showConfirmButton: false,
+            timer: 1500
+        })
     } else {
-        persona.agregarGasto(elemento);
-        persona.sumaGasto();
-        console.log(persona.sumaGasto())
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Datos Mal ingresados, intenta nuevamente',
+            showConfirmButton: false,
+            timer: 1500
+        })
     }
-    console.table('gasto/ingreso agregado');
+    buttonGas.disabled = false;
+    buttonIng.disabled = false;
+
     limpiarMovimiento();
     CalculateWallet(persona.sumaIngreso(), persona.sumaGasto());
     mostrarListado();
 
-    Swal.fire(
-        'Excelente!',
-        'Tu Movimiento fue cargado!',
-        'Volver'
-    )
-
 });
 
+//LIMPIADOR CAMPOS MODAL
+function limpiarMovimiento() {
+    selectGas.selectedIndex = 0;
+    selectIng.selectedIndex = 0;
+    selectGas.disabled, selectIng.disabled = true;
+    montoMovimiento.value = "";
+    elemento = [];
+    elegirOpcion = "";
+};
 
-//ACCION DE BOTON INGRESO/GASTO
+
+//ACCION DE BOTONES INGRESO/GASTO
 function seleccionIngresoGasto() {
     for (const boton of botones) {
         boton.addEventListener('click', () => {
@@ -82,35 +107,27 @@ function seleccionIngresoGasto() {
                 selectIng.disabled = false;
                 selectGas.disabled = true;
                 IngGas = 1;
+                buttonGas.disabled = true;
+
             } else {
                 console.log('click en gasto')
                 selectGas.disabled = false;
                 selectIng.disabled = true;
                 IngGas = 2;
+                buttonIng.disabled = true;
             }
             boton.classList.add('active');
         });
-    }
-}
+    };
+};
+//SELECCION DE TIPO DE MOVIMIENTO
 function seleccionMovimiento() {
-    selectIng.addEventListener('change', () => {
-        elegirOpcion = selectIng.value;
-        console.log(elegirOpcion);
-    });
-    selectGas.addEventListener('change', () => {
-        elegirOpcion = selectGas.value;
-        console.log('elegiste un gasto con el motivo', elegirOpcion);
-    });
+    selectIng.addEventListener('change', () => elegirOpcion = selectIng.value);
+    selectGas.addEventListener('change', () => elegirOpcion = selectGas.value);
 }
-
-
-listaGastos.addEventListener('click', () => {
-    mostrarListado('gastos');
-});
-
-listaIngresos.addEventListener('click', () => {
-    mostrarListado('ingresos');
-});
+//TABLAS DE INGRESOS Y GASTOS
+listaGastos.addEventListener('click', () => mostrarListado('gastos'));
+listaIngresos.addEventListener('click', () => mostrarListado('ingresos'));
 
 function mostrarListado(tipo) {
     listaMovimientos.innerHTML = "";
@@ -138,16 +155,12 @@ function mostrarListado(tipo) {
             listaMovimientos.appendChild(movimiento);
         }
     }
-
-    // Mostrar la lista de movimientos
     if (listaMovimientos.classList.contains('d-none')) {
         listaMovimientos.classList.remove('d-none');
     }
 }
 
 //Funcion para calcular restante que queda en la billetera
-
-
 function CalculateWallet(incr, decr) {
     persona.balanceTotal = incr - decr;
     // Round para redondeo
@@ -162,7 +175,6 @@ function CalculateWallet(incr, decr) {
         nivelMes = "Es un excelente mes para Ahorrar capital";
     }
     //refresca dashboard
-
     restanteDashboard.innerText = `$${persona.balanceTotal}`;
     porcentualDashboard.innerText = `${persona.porcentualBilletera}%`;
     egresosDashboard.innerText = `$${persona.sumaGasto()}`;
@@ -172,23 +184,15 @@ function CalculateWallet(incr, decr) {
 };
 
 
-//LIMPIADOR CAMPOS MODAL
-function limpiarMovimiento() {
-    selectGas.selectedIndex = 0;
-    selectIng.selectedIndex = 0;
-    selectGas.disabled, selectIng.disabled = true;
-    montoMovimiento.value = "";
-};
-
 function cambiarMoneda() {
     //CONSUMIENDO API - para cambio de moneda en el dashboard
     const URLDOLAR = 'https://api.bluelytics.com.ar/v2/latest';
     fetch(URLDOLAR)
         .then(respuesta => respuesta.json())
         .then(datos => {
-            console.log(datos);
+            //      console.log(datos);
             const cotizacionesBlue = datos.blue;
-            console.log(cotizacionesBlue.value_buy)
+            //       console.log(cotizacionesBlue.value_buy)
 
             switchMoneda.addEventListener('change', () => {
                 if (switchMoneda.checked) {

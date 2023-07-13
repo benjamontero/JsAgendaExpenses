@@ -18,29 +18,39 @@
 </head>
 
 <body>
-    <div class="container-fluid px-4 p-4 border border-primary  ">
-        <nav class="p-2 navbar navbar-expand-lg navbar-light border border-primary ">
-            <a class="navbar-brand" href="#">Billetera Personal </a>
-            <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Ingresos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Gastos</a>
-                    </li>
+    <div class="container-fluid px-4 p-4 border">
+        <nav class="navbar bg-body-tertiary rounded">
+            <div class="container-fluid">
+                <a class="navbar-brand">Billetera Personal</a>
+                <div class="">
+                    La conversion del dolar (Blue) solo se mostrara en el Panel general del Dashboard
+                </div>
+                <div class="d-flex">
+                    <label class="pe-2"> Pesos Argentinos </label>
 
-                </ul>
-            </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault"> USD</label>
+                    </div>
+
+                    <div>
+
+                    </div>
         </nav>
+
         <div class="container-fluid pt-4 px-4">
+            <div class="row g-3 mb-2 justify-content-center">
+                <div class="col-sm-7">
+                    <div
+                        class="bg-light rounded  shadow-sm d-flex align-items-center flex-column justify-content-center p-4">
+                        <i class="fa fa-university fa-3x text-primary opacity-75"></i>
+                        <div class="">
+                            <p class="mb-2 fs-4 text-center">Mensaje de Billetera</p>
+                            <h5 id="recomendacion" class="mb-0 text-center"></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row g-3">
                 <div class="col-sm-6 ">
                     <div class="bg-light rounded  shadow-sm d-flex align-items-center justify-content-between p-4">
@@ -52,7 +62,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 ">
-                    <div class="bg-light rounded shadow-sm d-flex align-items-center justify-content-between p-4">
+                    <div class="bg-light rounded shadow-sm d-flex align-items-center justify-content-between p-4 ">
                         <i class="fa fa-chart-pie fa-3x text-primary opacity-75"></i>
                         <div class="ms-3">
                             <p class="mb-2 fs-4">% Wallet</p>
@@ -61,9 +71,11 @@
                     </div>
                 </div>
                 <div class="col-sm-6 ">
-                    <div class="bg-success opacity-75 rounded d-flex align-items-center justify-content-between p-4">
-                        <i class="fa fa-chart-line fa-3x text-light"></i>
-                        <button id="listadoDeIngresos" type="button" class="btn btn-light btn-lg">Mostrar </button>
+                    <div
+                        class="bg-success opacity-75 rounded d-flex align-items-center justify-content-between p-4 shadow ">
+                        <button id="listadoDeIngresos" type="button" class="btn btn-light border border-3 btn-lg ">
+                            <i class="fa fa-chart-line fa-3x text-primary"></i>
+                        </button>
                         <div class="ms-3">
                             <p class="mb-2 text-light fs-4">Ingresoss</p>
                             <h5 id="ingresosPanel" class="mb-0 text-light"></h5>
@@ -71,9 +83,12 @@
                     </div>
                 </div>
                 <div class="col-sm-6 ">
-                    <div class="bg-danger rounded opacity-75 d-flex align-items-center justify-content-between p-4">
-                        <i class="fa fa-exclamation-triangle  fa-3x text-light"></i>
-                        <button id="listadoDeEgresos" type="button" class="btn btn-light btn-lg">Mostrar</button>
+                    <div
+                        class="bg-danger rounded opacity-75 d-flex align-items-center justify-content-between p-4 shadow ">
+
+                        <button id="listadoDeEgresos" type="button" class="btn btn-light border border-3 btn-lg">
+                            <i class="fa fa-exclamation-triangle  fa-3x text-primary"></i>
+                        </button>
                         <div class="ms-3">
                             <p class="mb-2 text-light fs-4">Gastos</p>
                             <h5 id="egresosPanel" class="mb-0 text-light"></h5>
@@ -154,6 +169,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    <button id="btnReiniciar" type="button" class="btn btn-secondary">Borrar</button>
                     <button id="cargarMovimiento" type="button" class="btn btn-primary">Cargar</button>
                 </div>
             </div>
@@ -163,6 +179,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script src="objetos.js"></script>
     <script src="01.js"></script>
 

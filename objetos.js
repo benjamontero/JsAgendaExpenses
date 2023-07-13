@@ -8,8 +8,8 @@ const persona =
         movimientos: [
             {
                 motivo: 'Sueldo',
-                monto: 250000,
-                fecha: new Date('06/01/23').toLocaleDateString()
+                monto: 256343,
+                fecha: new Date('07/01/23').toLocaleDateString()
             },
             {
                 motivo: 'Aguinaldo',
@@ -24,39 +24,49 @@ const persona =
             {
                 motivo: 'Supermercado',
                 monto: 18450,
-                fecha: new Date('06/02/23').toLocaleDateString()
+                fecha: new Date('07/02/23').toLocaleDateString()
             },
             {
                 motivo: 'Tarjeta de credito',
                 monto: 32333,
-                fecha: new Date('06/05/23').toLocaleDateString()
+                fecha: new Date('07/05/23').toLocaleDateString()
             },
             {
                 motivo: 'Tarjeta de credito',
                 monto: 18234,
-                fecha: new Date('06/07/23').toLocaleDateString()
+                fecha: new Date('07/07/23').toLocaleDateString()
             },
             {
                 motivo: 'Impuestos',
                 monto: 4300,
-                fecha: new Date('06/01/23').toLocaleDateString()
+                fecha: new Date('07/01/23').toLocaleDateString()
             },
             {
                 motivo: 'Vehiculo',
                 monto: 15300,
-                fecha: new Date('06/04/23').toLocaleDateString()
+                fecha: new Date('07/04/23').toLocaleDateString()
             },
             {
                 motivo: 'Extra',
                 monto: 1200,
-                fecha: new Date('06/04/23').toLocaleDateString()
+                fecha: new Date('07/04/23').toLocaleDateString()
             },
             {
                 motivo: 'Extra',
                 monto: 3500,
-                fecha: new Date('06/06/23').toLocaleDateString()
+                fecha: new Date('07/06/23').toLocaleDateString()
+            },
+            {
+                motivo: 'Extra',
+                monto: 4356,
+                fecha: new Date('07/08/23').toLocaleDateString()
+            },
+            {
+                motivo: 'Tarjeta de credito',
+                monto: 5750,
+                fecha: new Date('07/10/23').toLocaleDateString()
             }
-        ],
+        ]
     },
     //  metodos para agregar al gastos/ingresoss
     agregarIngreso(ingreso) {

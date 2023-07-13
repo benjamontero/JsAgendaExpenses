@@ -14,6 +14,7 @@ let selectGas = document.getElementById('selectGas');
 let selectIng = document.getElementById('selectIng');
 let montoMovimiento = document.getElementById('monto');
 let botonCargar = document.getElementById('cargarMovimiento');
+const btnReiniciar = document.getElementById('btnReiniciar');
 //Variables para los BOTONES que generaran las listas
 let listaIngresos = document.getElementById('listadoDeIngresos');
 let listaGastos = document.getElementById('listadoDeEgresos')
@@ -74,14 +75,18 @@ botonCargar.addEventListener('click', () => {
             timer: 1500
         })
     }
-    buttonGas.disabled = false;
-    buttonIng.disabled = false;
+
 
     limpiarMovimiento();
     CalculateWallet(persona.sumaIngreso(), persona.sumaGasto());
     mostrarListado();
 
 });
+
+//BTN Reiniciar Modal
+btnReiniciar.addEventListener('click', () => {
+    limpiarMovimiento();
+})
 
 //LIMPIADOR CAMPOS MODAL
 function limpiarMovimiento() {
@@ -91,7 +96,10 @@ function limpiarMovimiento() {
     montoMovimiento.value = "";
     elemento = [];
     elegirOpcion = "";
+    buttonGas.disabled = false;
+    buttonIng.disabled = false;
 };
+
 
 
 //ACCION DE BOTONES INGRESO/GASTO

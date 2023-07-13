@@ -1,11 +1,11 @@
 //Variables para utilizar en el calculo de dashboard
 let mayorConsumo = 0;
 let nombreMayorMotivo = '';
-let nivelMes;
 let ingresosDashboard = document.getElementById('ingresosPanel');
 let egresosDashboard = document.getElementById('egresosPanel');
 let porcentualDashboard = document.getElementById('porcentajePanel');
 let restanteDashboard = document.getElementById('restantePanel');
+let recomendacion = document.getElementById('recomendacion');
 // variables para CAPTURAR los datos del modal
 let buttonIng = document.getElementById('buttonIng');
 let buttonGas = document.getElementById('buttonGas');
@@ -40,8 +40,8 @@ let IngGas;
 let fecha = new Date().toLocaleDateString();
 
 botonCargar.addEventListener('click', () => {
-    //VALIDACION: Verifica si los campos cumplen con las condiciones //FALTA VALIDAR QUE NO ENTRE LETRAS
-    if (elegirOpcion !== "" && montoMovimiento.value !== "") {
+    //VALIDACION: Verifica si los campos cumplen con las condiciones 
+    if (elegirOpcion !== "" && montoMovimiento.value !== "" && /^\d+$/.test(montoMovimiento.value.trim())) {
         elemento = {
             motivo: elegirOpcion,
             monto: parseInt(montoMovimiento.value),
@@ -84,9 +84,7 @@ botonCargar.addEventListener('click', () => {
 });
 
 //BTN Reiniciar Modal
-btnReiniciar.addEventListener('click', () => {
-    limpiarMovimiento();
-})
+btnReiniciar.addEventListener('click', () => limpiarMovimiento());
 
 //LIMPIADOR CAMPOS MODAL
 function limpiarMovimiento() {
@@ -173,14 +171,14 @@ function CalculateWallet(incr, decr) {
     persona.balanceTotal = incr - decr;
     // Round para redondeo
     persona.porcentualBilletera = Math.round(((incr - decr) / incr) * 100);
-    if ((persona.porcentualBilletera >= 1) && (persona.porcentualBilletera <= 10)) {
-        nivelMes = "Verifica tus margenes, estas cerca que quedarte sin dinero";
-    } else if ((persona.porcentualBilletera >= 11) && (persona.porcentualBilletera <= 30)) {
-        nivelMes = "Bien, buena administracion";
-    } else if ((persona.porcentualBilletera >= 31) && (persona.porcentualBilletera <= 50)) {
-        nivelMes = "Es un gran Mes! sigue asi!";
+    if ((persona.porcentualBilletera >= 1) && (persona.porcentualBilletera <= 15)) {
+        recomendacion.innerText = 'Verifica tus margenes, estas cerca que quedarte sin dinero'
+    } else if ((persona.porcentualBilletera >= 16) && (persona.porcentualBilletera <= 40)) {
+        recomendacion.innerText = "Bien, buena administracion";
+    } else if ((persona.porcentualBilletera >= 41) && (persona.porcentualBilletera <= 70)) {
+        recomendacion.innerText = "Es un gran Mes! sigue asi!";
     } else {
-        nivelMes = "Es un excelente mes para Ahorrar capital";
+        recomendacion.innerText = "Es un excelente mes para Ahorrar capital";
     }
     //refresca dashboard
     restanteDashboard.innerText = `$${persona.balanceTotal}`;

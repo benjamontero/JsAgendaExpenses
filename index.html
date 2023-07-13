@@ -18,10 +18,13 @@
 </head>
 
 <body>
-    <div class="container-fluid px-4 p-4 border border-primary  ">
-        <nav class="navbar bg-body-tertiary">
+    <div class="container-fluid px-4 p-4 border">
+        <nav class="navbar bg-body-tertiary rounded">
             <div class="container-fluid">
                 <a class="navbar-brand">Billetera Personal</a>
+                <div class="">
+                    La conversion del dolar (Blue) solo se mostrara en el Panel general del Dashboard
+                </div>
                 <div class="d-flex">
                     <label class="pe-2"> Pesos Argentinos </label>
 
@@ -36,6 +39,18 @@
         </nav>
 
         <div class="container-fluid pt-4 px-4">
+            <div class="row g-3 mb-2 justify-content-center">
+                <div class="col-sm-7">
+                    <div
+                        class="bg-light rounded  shadow-sm d-flex align-items-center flex-column justify-content-center p-4">
+                        <i class="fa fa-university fa-3x text-primary opacity-75"></i>
+                        <div class="">
+                            <p class="mb-2 fs-4 text-center">Mensaje de Billetera</p>
+                            <h5 id="recomendacion" class="mb-0 text-center"></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row g-3">
                 <div class="col-sm-6 ">
                     <div class="bg-light rounded  shadow-sm d-flex align-items-center justify-content-between p-4">
